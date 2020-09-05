@@ -1,3 +1,23 @@
+# Video player
+
+This project has the intention to put on practice the learnings from React Certification. This project has the purpose to mimic some features included on [Youtube](https://www.youtube.com).
+
+## Home
+
+You will watch some trending videos, search for videos and add to your favorites.
+
+## Favorites
+
+You are able to see all your favorites videos, filter by words and by categories. You could also remove one video from your favorties.
+
+## Video Player
+
+After selecting one video you can reproduce it, watch some related videos and mark it as favorite.
+
+## Login
+
+You are able to login to a fake user using the username `reactDeveloper` and any password different from blank.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
