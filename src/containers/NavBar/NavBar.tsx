@@ -3,53 +3,24 @@ import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import SearchIcon from '@material-ui/icons/Search'
 import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import MenuIcon from '@material-ui/icons/Menu'
+import SearchIcon from '@material-ui/icons/Search'
+import HomeIcon from '@material-ui/icons/Home'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+
+import { GrowRemainingSpace, AccountIcon, DrawerList, SearchWrapper, SearchIconWrapper } from './NavBar.styled'
+import { IProps } from './NavBar.typed';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    grow: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-        display: 'block',
-      },
-    },
-    search: {
-      position: 'relative',
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
-      marginRight: theme.spacing(2),
-      marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-      },
-    },
-    searchIcon: {
-      padding: theme.spacing(0, 2),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     inputRoot: {
       color: 'inherit',
     },
@@ -63,22 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '20ch',
       },
     },
-    sectionDesktop: {
-      display: 'none',
-      [theme.breakpoints.up('md')]: {
-        display: 'flex',
-      },
-    },
-    sectionMobile: {
-      display: 'flex',
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
-    },
   }),
 );
 
-export default function NavBar() {
+export default function NavBar({ setOpen }: IProps) {
   const classes = useStyles();
   const [isDrawerOpen, setDrawer] = useState<boolean>(false);
 
@@ -88,6 +47,10 @@ export default function NavBar() {
     }
 
     setDrawer(open);
+  }
+
+  const handleOpen = () => {
+    setOpen(true);
   }
 
   return (
@@ -100,29 +63,41 @@ export default function NavBar() {
           <Typography variant="h6" >
             Awesome Player
         </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
+          <SearchWrapper>
+            <SearchIconWrapper>
               <SearchIcon />
-            </div>
+            </SearchIconWrapper>
             <InputBase
               placeholder="Search videos..."
               classes={{ root: classes.inputRoot, input: classes.inputInput }}
               inputProps={{ 'aria-label': 'search' }}
             />
-          </div>
+          </SearchWrapper>
+          <GrowRemainingSpace />
+          <AccountIcon>
+            <IconButton edge="end" aria-label="account of current user" onClick={handleOpen} color="inherit">
+              <AccountCircle />
+            </IconButton>
+          </AccountIcon>
         </Toolbar>
       </AppBar>
-      <Drawer anchor='left' open={isDrawerOpen}>
-        <div className='left' role='presentation' onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
+      <Drawer anchor='left' open={isDrawerOpen} onClose={toggleDrawer(false)}>
+        <DrawerList role='presentation' onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
           <List>
-            <ListItem button>
+            <ListItem button selected>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
               <ListItemText primary='Home' />
             </ListItem>
             <ListItem button>
+              <ListItemIcon>
+                <FavoriteIcon />
+              </ListItemIcon>
               <ListItemText primary='Favorites' />
             </ListItem>
           </List>
-        </div>
+        </DrawerList>
       </Drawer>
     </>
   )
